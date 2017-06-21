@@ -18,6 +18,8 @@ def simula()
   humidade => rand(0..100),
   latitude => @latitude,
   longitude => @longitude
+  datetime => DateTime.now,
+  
         }   
 resp = Net::HTTP.post_form(url, params)
     }
