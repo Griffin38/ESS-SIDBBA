@@ -1,6 +1,7 @@
 require 'net/http'
+require 'uri'
 
-url = 'PLaceHolder'
+url = URI('localhost')
 
 def simula()
 
@@ -17,11 +18,10 @@ def simula()
   pressao => rand(300..1100),
   humidade => rand(0..100),
   latitude => @latitude,
-  longitude => @longitude
-  datetime => DateTime.now,
-  
-        }   
-resp = Net::HTTP.post_form(url, params)
+  longitude => @longitude,
+  datetime => DateTime.now
+        }.to_json
+resp = Net::HTTP.post(url, params,"Content-Type" => "application/json")
     }
    }   
    
@@ -32,6 +32,7 @@ resp = Net::HTTP.post_form(url, params)
 puts "PARA TERMINAR ESCREVA: CLOSE"
 if gets.chomp == "CLOSE" || gets.chomp == "close"
 	Thread.kill(sensor) 
+    
 end
 
 end
