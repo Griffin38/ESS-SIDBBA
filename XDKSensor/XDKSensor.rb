@@ -1,7 +1,7 @@
 require 'net/http'
 require 'uri'
 
-url = URI('localhost')
+url = URI('localhost/posts')
 
 def simula()
 
@@ -11,7 +11,6 @@ def simula()
    sensor = Thread.new {
    loop {
    sleep(30)
-  time = Time.now.getutc
   params = {
   temperatura => rand(-20..60),
   luminosidade =>rand(0.045..188000),
@@ -37,7 +36,7 @@ end
 
 end
 
-
+#login?
 
 simula()
 
