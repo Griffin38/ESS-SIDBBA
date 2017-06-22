@@ -5,8 +5,8 @@ require 'json'
 urlU = URI("http://localhost:3000/users")
 urlS = URI("http://localhost:3000/posts")
 
-def simula()
-
+def simula(idU)
+@id = idU
 @latitude = rand(-90.000000000...90.000000000)
 @longitude = rand(-180.000000000...180.000000000)
 
@@ -98,12 +98,19 @@ when "login"
 	puts "Password:"
 	password = gets.chomp
 #getID
-paramsU = { :name => username, :pwd => password }
-urlU.query = URI.encode_www_form(paramsU)
+
 res = Net::HTTP.get_response(urlU)
-puts res.body if res.is_a?(Net::HTTPSuccess) #aqui
+data = JSON.parse res.body 
+aux = data.select { |a| a["name"] == username && a["pwd"] == password } 
+
+#NEEDS FIX 
+puts "work"
+aux.each do |x|
+puts x  
+end
+#################
 #simular
-		simula()
+simula(idU)
 		
 
 when "registo"
@@ -124,9 +131,17 @@ request["content-type"] = 'application/json'
 request["cache-control"] = 'no-cache'
 request.body = paramsR.to_json
 response = http.request(request)
-puts response.body if response.is_a?(Net::HTTPSuccess)
+data = JSON.parse response.body 
+aux = data.select { |a| intro << a } 
+#NEEDS FIX 
+puts "work2"
+aux.each do |x|
+puts x  
+end
+#################
+
 #simular
-simula()
+simula(idU)
 
 else puts "Opcao invalida!"
 
