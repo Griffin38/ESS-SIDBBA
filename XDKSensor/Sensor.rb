@@ -142,16 +142,28 @@ request["cache-control"] = 'no-cache'
 request.body = paramsR.to_json
 response = http2.request(request)
 data = JSON.parse response.body 
-aux = data.select { |a| intro << a  } 
+aux2 = data.select { |a| a["name"] == username && a["pwd"] == password } 
 #NEEDS FIX 
 puts "Registo com sucesso"
-intro.each do |x|
+	puts "Introduza as suas credenciais!"
+	puts "Username:"
+	username = gets.chomp
+	puts "Password:"
+	password = gets.chomp
+
+#getID
+res = Net::HTTP.get_response(urlU)
+data = JSON.parse res.body 
+aux = data.select { |a| a["name"] == username && a["pwd"] == password } 
+
+#NEEDS FIX 
+puts "Login com Sucesso"
+aux.each do |x|
 @idU = x["id"] 
 puts @idU
 end
 #################
 #simular
-
 simula(@idU)
 
 
