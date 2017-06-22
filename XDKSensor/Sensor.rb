@@ -4,6 +4,7 @@ require 'json'
 
 urlU = URI("http://localhost:3000/users")
 urlS = URI("http://localhost:3000/posts")
+
 def simula()
 
 @latitude = rand(-90.000000000...90.000000000)
@@ -11,25 +12,67 @@ def simula()
 
    sensor = Thread.new {
    loop {
-paramsS = {
-  "temperatura" => rand(-20..60),
-  "luminosidade" =>rand(0.045..188000),
-  "pressao" => rand(300..1100),
-  "humidade" => rand(0..100),
-  "latitude" => @latitude,
-  "longitude" => @longitude,
- #"date" => Date.now.to_s,
-  "time" => Time.now
-  }
+     #:user_id, :Sensor, :Value, :Latitude, :Longitude, :Date, :Time
+
+  #sensores 
+  temperatura =rand(-20..60)
+  luminosidade =rand(0.045..188000)
+  pressao = rand(300..1100)
+  humidade = rand(0..100)
+
+  #parametros
+paramsT = {
+  "user_id" => @id,
+ "Sensor" =>  "Temperatura",
+ "Value" => temperatura,
+  "Latitude" => @latitude,
+  "Longitude" => @longitude,
+ #"Date" => Date.now.to_s,
+  "Time" => Time.now
+}
+paramsL = {
+  "user_id" => @id,
+ "Sensor" =>  "Luminosidade",
+ "Value" => luminosidade,
+  "Latitude" => @latitude,
+  "Longitude" => @longitude,
+ #"Date" => Date.now.to_s,
+  "Time" => Time.now
+}
+paramsP = {
+  "user_id" => @id,
+ "Sensor" =>  "Pressao",
+ "Value" => pressao,
+  "Latitude" => @latitude,
+  "Longitude" => @longitude,
+ #"Date" => Date.now.to_s,
+  "Time" => Time.now
+}
+paramsH = {
+  "user_id" => @id,
+ "Sensor" =>  "Humidade",
+ "Value" => humidade,
+  "Latitude" => @latitude,
+  "Longitude" => @longitude,
+ #"Date" => Date.now.to_s,
+  "Time" => Time.now
+}
+#http
 http = Net::HTTP.new(urlS.host, urlS.port)
 request = Net::HTTP::Post.new(urlS)
 request["content-type"] = 'application/json'
 request["cache-control"] = 'no-cache'
-request.body = paramsS.to_json
-response = http.request(request)
+#Posts
+request.body = paramsT.to_json
+response = http.request(request) #temp
+request.body = paramsL.to_json
+response = http.request(request) #lumi
+request.body = paramsP.to_json
+response = http.request(request) #press
+request.body = paramsH.to_json
+response = http.request(request) #humi
    sleep(30)
-  
-   
+
     }
    }   
 
@@ -39,7 +82,6 @@ response = http.request(request)
 puts "PARA TERMINAR ESCREVA: CLOSE"
 if gets.chomp == "CLOSE" || gets.chomp == "close"
 	Thread.kill(sensor) 
-
 end
 
 end
@@ -55,13 +97,12 @@ when "login"
 	username = gets.chomp
 	puts "Password:"
 	password = gets.chomp
-	#get
+#getID
 paramsU = { :name => username, :pwd => password }
 urlU.query = URI.encode_www_form(paramsU)
-
 res = Net::HTTP.get_response(urlU)
-puts res.body if res.is_a?(Net::HTTPSuccess)
-
+puts res.body if res.is_a?(Net::HTTPSuccess) #aqui
+#simular
 		simula()
 		
 
@@ -71,6 +112,7 @@ when "registo"
 	username = gets.chomp
 	puts "Password:"
 	password = gets.chomp
+  #post
  paramsR = {
   "name" => username,
   "pwd" => password,
@@ -83,6 +125,7 @@ request["cache-control"] = 'no-cache'
 request.body = paramsR.to_json
 response = http.request(request)
 puts response.body if response.is_a?(Net::HTTPSuccess)
+#simular
 simula()
 
 else puts "Opcao invalida!"
