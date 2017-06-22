@@ -97,20 +97,20 @@ when "login"
 	username = gets.chomp
 	puts "Password:"
 	password = gets.chomp
-#getID
 
+#getID
 res = Net::HTTP.get_response(urlU)
 data = JSON.parse res.body 
 aux = data.select { |a| a["name"] == username && a["pwd"] == password } 
 
 #NEEDS FIX 
-puts "work"
+puts "Login com Sucesso"
 aux.each do |x|
-puts x  
+@idU = x["id"] 
 end
 #################
 #simular
-simula(idU)
+simula(@idU)
 		
 
 when "registo"
@@ -134,14 +134,13 @@ response = http.request(request)
 data = JSON.parse response.body 
 aux = data.select { |a| intro << a } 
 #NEEDS FIX 
-puts "work2"
+puts "Registo com sucesso"
 aux.each do |x|
-puts x  
+@idU = x["id"] 
 end
 #################
-
 #simular
-simula(idU)
+simula(@idU)
 
 else puts "Opcao invalida!"
 
