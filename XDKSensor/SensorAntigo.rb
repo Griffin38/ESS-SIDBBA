@@ -1,6 +1,7 @@
 require 'net/http'
 require 'uri'
 require 'json'
+require 'date'
 
 url = URI("http://localhost:3000/users")
 
@@ -30,21 +31,12 @@ request.body = params.to_json
 
 response = http.request(request)
 =end
+puts "antes "
   params = {
-  "name" => "verdadeiro",
-  "pwd" => "1234",
-  "estado" => true
+ "date" => DateTime.now
   }
 
-
-http = Net::HTTP.new(url.host, url.port)
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["cache-control"] = 'no-cache'
-request.body = params
-response = http.request(request)
-puts response.read_body
+puts DateTime.now.to_date
 sleep(120)
     }
    }   
