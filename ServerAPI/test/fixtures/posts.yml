@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  Sensor: MyString
+  Value: MyString
+  Latitude: MyString
+  Longitude: MyString
+  Date: MyString
+  Time: MyString
+
+two:
+  user: two
+  Sensor: MyString
+  Value: MyString
+  Latitude: MyString
+  Longitude: MyString
+  Date: MyString
+  Time: MyString
