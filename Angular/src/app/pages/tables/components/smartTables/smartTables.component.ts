@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 
 import { SmartTablesService } from './smartTables.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'smart-tables',
@@ -10,6 +11,8 @@ import { LocalDataSource } from 'ng2-smart-table';
   styleUrls: ['./smartTables.scss']
 })
 export class SmartTables {
+ data: any;
+  
 source: LocalDataSource;
    settings = {
      actions: false,
@@ -20,26 +23,40 @@ source: LocalDataSource;
         addable: false,
       },
 
-
-      name: {
-        title: 'Full Name',
+      Sensor: {
+        title: 'Tipo',
       },
-      username: {
-        title: 'User Name',
+      Value: {
+        title: 'Value',
       },
-      email: {
-        title: 'Email',
+      Latitude: {
+        title: 'Latitude',
+      },
+      Longitude: {
+        title: 'Longitude',
+      },
+      Date: {
+        title: 'Data',
+      },
+      Time: {
+        title: 'Time',
       },
     },
   };
 
   
-   constructor(protected service: SmartTablesService) {
-    this.source = new LocalDataSource();
+   constructor(private http2: Http) {
+      this.source = new LocalDataSource();
+    this.data = http2.get('http://localhost:3000/posts').map(response => response.json());
+    
 
-    this.service.getData().then((data) => {
-      this.source.load(data);
-    });
+
+    alert(this.source.count());
+    
+    //this.source.load(this.data);s
+    //this.service.getData().then((data) => {
+      //
+    //});
   }
 
 }
